@@ -97,7 +97,7 @@ venv.bak/
 
 # folder
 app/upload/2019
-app/db.py
+app/Environments
 
 # Spyder project settings
 .spyderproject
@@ -117,3 +117,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .DS_Store
+app/db.py
