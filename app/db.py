@@ -1,10 +1,18 @@
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from os import path
+import os
 
-engine = create_engine('postgresql://')
 
+environ_ = path.join(os.getcwd(), 'environment', 'engine_db.env')
+with open(environ_, 'r', encoding='UTF-8') as f:
+    os.environ['db_engine'] = f.read()
+
+
+engine = create_engine(f'postgresql://{os.environ.get('db_engine')}')
 db_session = scoped_session(sessionmaker(bind=engine))
+
 
 Base = declarative_base()
 Base.query = db_session.query_property()
