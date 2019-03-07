@@ -97,7 +97,7 @@ venv.bak/
 
 # folder
 app/upload/2019
-app/Environments
+app/environments
 
 # Spyder project settings
 .spyderproject
