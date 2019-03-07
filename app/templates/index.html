@@ -1,0 +1,15 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Junked - файловый обменник</title>
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="input_file">
+            <form action="/" method="POST" enctype="multipart/form-data"> <input type="file" name="file"/>
+                <button type="submit">Загрузить</button>
+            </form>
+        </div>
+    </body>
+</html>
