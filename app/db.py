@@ -10,7 +10,7 @@ with open(environ_, 'r', encoding='UTF-8') as f:
     os.environ['db_engine'] = f.read()
 
 
-engine = create_engine(f'postgresql://{os.environ.get('db_engine')}')
+engine = create_engine(f'postgresql://{os.environ.get("db_engine")}')
 db_session = scoped_session(sessionmaker(bind=engine))
 
 
