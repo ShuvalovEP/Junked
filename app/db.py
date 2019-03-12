@@ -5,8 +5,8 @@ from os import path
 import os
 
 
-environ_ = path.join(os.getcwd(), 'environment', 'engine_db.env')
-with open(environ_, 'r', encoding='UTF-8') as f:
+engine_db = path.join(os.getcwd(), 'environment', 'engine_db.env')
+with open(engine_db, 'r', encoding='UTF-8') as f:
     os.environ['db_engine'] = f.read()
 
 
