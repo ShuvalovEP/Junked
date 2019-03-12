@@ -118,4 +118,4 @@ dmypy.json
 .pyre/
 .DS_Store
 app/db.py
-app/environment/engine_db.env
+app/environment/
