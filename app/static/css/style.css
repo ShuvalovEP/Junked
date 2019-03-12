@@ -1,9 +1,78 @@
-#input_file {
-    position: absolute;	/* Абсолютное позиционирование */
-    width: 350px; /* Ширина слоя в пикселах */
-    height: 30px; /* Высота слоя в пикселах */
-    left: 50%; /* Положение слоя от левого края */
-    top: 40%; /* Положение слоя от верхнего края */
-    margin-top: -150px;	/* Отступ сверху */
-    background: #FFFFF0; /* Цвет фона */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    background: #FFFFFF;
+    background: -webkit-radial-gradient(top, #FFFFFF, #F3F3F3);
+    background: -moz-radial-gradient(top, #FFFFFF, #F3F3F3);
+    background: radial-gradient(to bottom, #FFFFFF, #F3F3F3);
+}
+
+.container {
+    position: absolute;
+    display: table;
+    top: 50%;
+    left: 47.7%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.alert{
+    text-align: center;
+}
+
+.logo {
+    color: #696969;
+    font-size: 58px;
+    font-family: 'K2D', serif; 
+    position: absolute;
+    display: table;
+    top: 26%;
+    left: 50.7%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.description {
+    color: #808080;
+    font-size: 17px;
+    font-family: 'Montserrat', serif; 
+    position: absolute;
+    display: table;
+    top: 31.3%;
+    left: 47.7%;
+    margin-right: -60%;
+    transform: translate(-49%, -35%);
+}
+.form-control
+{
+    font-size: 15px;
+    font-family: 'Montserrat', serif; 
+    box-shadow: 3px 2px 2px 2 #808080;
+}
+
+#footer {
+    color: #808080;
+    bottom: 0;
+    cursor: default;
+    height: 6em;
+    left: 0;
+    line-height: 8em;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.footer a {
+    color: #808080;
+    font-size: 20px;
+    padding: 10px;
+}
+
+
+.footer a:hover {
+    color: red;
 }

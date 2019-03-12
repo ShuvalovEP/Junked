@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, send_from_directory
+from flask import Flask, render_template, request, redirect, send_from_directory, session
 from db import db_session, meta
 from datetime import datetime
 from os import path
@@ -8,7 +8,13 @@ import os
 import re
 
 
-app = Flask(__name__)
+secret_key = path.join(os.getcwd(), 'environment', 'secret_key.env')
+with open(secret_key, 'r', encoding='UTF-8') as f:
+    os.environ['SECRET_KEY'] = f.read()
+
+
+app = Flask(__name__, static_folder='static') 
+app.config['SECRET_KEY'] = f'{os.environ.get("SECRET_KEY")}'
 
 
 def get_date(mask_date):
@@ -92,21 +98,44 @@ def get_urls_file(short_link):
 
 
 def short_link_validator(short_link):
-    """ Checks short link for the correctness of the incoming """
+    """ Checks short link for a valid """
     if re.fullmatch(r'[ABCEHKMOPT]+', short_link):
         return get_urls_file(short_link)
     else:
         return False
 
+def get_token():
+    """Sets a token to prevent double posts."""
+    return str(uuid.uuid1())
+
+def generate_form_token():
+    """ Sets a token to prevent double posts """
+    if '_form_token' not in session:
+        form_token = get_token()
+        session['_form_token'] = form_token
+    return session['_form_token']
+
+
+@app.before_request
+def check_form_token():
+    """ Checks for a valid form token in POST requests """
+    if request.method == 'POST':
+        token = session.pop('_form_token', None)
+        if not token or token != request.form.get('_form_token'):
+            return render_template('index.html')
+
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
+    link = ''
     if request.method == 'POST':
         files_request = request.files['file']
-        upload(files_request)
-        return render_template("index.html")
+        link = upload(files_request)
+        return render_template('link.html', link=link)
     elif request.method == 'GET':
-        return render_template("index.html")
+        form_token = get_token()
+        app.jinja_env.globals['form_token'] = generate_form_token
+        return render_template('index.html')
 
 
 @app.route('/<short_link>')
@@ -120,5 +149,11 @@ def redirect_link(short_link):
         return render_template('index.html', code=404)
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.route('/robots.txt')
+@app.route('/sitemap.xml')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, threaded=True)

@@ -17,6 +17,7 @@
       <link href="https://fonts.googleapis.com/css?family=K2D" rel="stylesheet"/>
       <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"/>
     <!-- jinja2 - style.css, favicon.ico, js -->
+      <script src="{{ url_for('static', filename='copy.js') }}"></script>
       <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
       <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
@@ -25,27 +26,18 @@
       <div class="logo"><span>Junked</span></div>
       <div class="description"><span>Файловый обменник</span></div>
       <div class="container">   
-      {% if form_token %}
-        <div class="input-group">
-          <form action="/" method="POST" enctype="multipart/form-data">
+      {% if link %}
+          <div class="input-group mb-3">
             <div class="input-group">
-              <div class="custom-file">
-                <input type='hidden' name='_form_token' value='{{ form_token() }}'/> 
-                <input type="file" name="file" class="custom-file-input" id="inputGroupFile04">
-                <label class="custom-file-label" for="inputGroupFile04"'>Choose file</label>
-              </div>
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-outline-success" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-copy" style="font-size:26px"></i>
+              <input type="text" class="form-control" id='input' value="https://Junked.ru/{{ link }}" readonly>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-outline-success" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id='bCopy' >
+                    <i class="fa fa-copy" style="font-size:26px"></i>
                   </button>
-                </div>
-                <script type="application/javascript">
-                        $('input[type="file"]').change(function(e){
-                          var fileName = e.target.files[0].name;
-                        $('.custom-file-label').html(fileName);});
-                </script>
+                </span>
             </div>
-          </form>
-        </div>
+          </div>
+          <div id='log'></div>
       {% endif %}
   </header>
   <footer id="footer" class="footer">
