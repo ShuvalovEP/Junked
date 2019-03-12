@@ -1,0 +1,22 @@
+ersion: '3.5'
+services:
+  web:
+    container_name: web
+    restart: always
+    build: .
+    ports:
+      - "5000"
+    volumes:
+      - ./app:/app
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/junked.conf:/etc/nginx/sites-enabled/junked.conf
+      - ./logs/nginx:/etc/log/nginx
+      - ./app/static:/static
+    ports:
+      - "80:80"
+      - "443:443"
