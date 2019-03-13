@@ -14,7 +14,7 @@ with open(secret_key, 'r', encoding='UTF-8') as f:
     os.environ['SECRET_KEY'] = f.read()
 
 
-app = Flask(__name__, static_folder='static') 
+app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = f'{os.environ.get("SECRET_KEY")}'
 
 
@@ -105,9 +105,11 @@ def short_link_validator(short_link):
     else:
         return False
 
+
 def get_token():
     """Sets a token to prevent double posts."""
     return str(uuid.uuid1())
+
 
 def generate_form_token():
     """ Sets a token to prevent double posts """
@@ -154,6 +156,7 @@ def redirect_link(short_link):
 @app.route('/sitemap.xml')
 def static_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
+
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 if __name__ == '__main__':
