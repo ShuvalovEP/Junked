@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, send_from_directory, session
+from werkzeug.contrib.fixers import ProxyFix
 from db import db_session, meta
 from datetime import datetime
 from os import path
@@ -154,6 +155,6 @@ def redirect_link(short_link):
 def static_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
 
-
+app.wsgi_app = ProxyFix(app.wsgi_app)
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+    app.run(host='0.0.0.0', port=5000)
