@@ -38,6 +38,7 @@ def get_hash(file_):
 def get_short_link():
     """ Returns a short link to the file """
     short_link = ''
+    url = [url.file_short_link for url in meta.query.filter(meta.file_short_link == f'{short_link}')]
     alpha = {'1': 'A',
              '2': 'B',
              '3': 'C',
@@ -50,7 +51,10 @@ def get_short_link():
              '0': 'T'}
     for row in str(hash(str(uuid.uuid1())) % 100000000):
         short_link = (alpha.get(row)) + short_link
-    return short_link
+    if url == []:
+        return short_link
+    else:
+        return False
 
 
 def upload_folde(file_id):
@@ -101,13 +105,17 @@ def get_urls_file(short_link):
 def short_link_validator(short_link):
     """ Checks short link for a valid """
     if re.fullmatch(r'[ABCEHKMOPT]+', short_link):
-        return get_urls_file(short_link)
+        link = get_urls_file(short_link)
+        if link:
+            return link
+        else:
+            return False
     else:
         return False
 
 
 def get_token():
-    """Sets a token to prevent double posts."""
+    """ Sets a token to prevent double posts """
     return str(uuid.uuid1())
 
 
